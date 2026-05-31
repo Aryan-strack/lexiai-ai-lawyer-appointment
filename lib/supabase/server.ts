@@ -2,8 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { Database } from '@/types/supabase'
 
-export function createClient() {
-  const cookieStore = cookies()
+export async function createClient() {
+  const cookieStore = await cookies() // ✅ Next.js 15: cookies() is async
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,9 +19,8 @@ export function createClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // Handle error - The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+            // This is called from a Server Component — safe to ignore
+            // Middleware handles session refresh
           }
         },
       },
@@ -29,40 +28,32 @@ export function createClient() {
   )
 }
 
-// Server-side function to get session
-export async function getServerSession() {
-  const supabase = createClient()
-  const { data: { session }, error } = await supabase.auth.getSession()
-  if (error) throw error
-  return session
-}
-
-// Server-side function to get current user
+// Server-side function to get current authenticated user (more secure than getSession)
 export async function getServerUser() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
-  if (error) throw error
+  if (error || !user) return null
   return user
 }
 
 // Server-side function to check if user is authenticated
 export async function isAuthenticated() {
-  const session = await getServerSession()
-  return !!session
+  const user = await getServerUser()
+  return !!user
 }
 
-// Server-side function to get user role
+// Server-side function to get user role from database
 export async function getUserRole() {
   const user = await getServerUser()
   if (!user) return null
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: profile, error } = await supabase
     .from('users')
     .select('role')
     .eq('id', user.id)
     .single()
 
-  if (error) throw error
-  return profile?.role
+  if (error) return null
+  return profile?.role ?? null
 }

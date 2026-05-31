@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Scale, Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react'
+import { Scale, Mail, Phone, MapPin } from 'lucide-react'
 
 const footerSections = {
   product: {
@@ -54,20 +54,6 @@ export function Footer() {
               AI-powered platform connecting clients with verified lawyers. 
               Get legal assistance anytime, anywhere.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Footer Sections */}

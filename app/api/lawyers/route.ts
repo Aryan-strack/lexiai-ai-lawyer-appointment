@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth/auth'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { z } from 'zod'
@@ -85,21 +83,22 @@ export async function GET(req: NextRequest) {
 // POST /api/lawyers/profile - Create/Update lawyer profile
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await req.json()
     const validated = lawyerProfileSchema.parse(body)
 
-    const supabase = createClient()
+
 
     // Check if user is a lawyer
     const { data: user } = await supabase
       .from('users')
       .select('role')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single()
 
     if (user?.role !== 'lawyer') {
@@ -125,7 +124,7 @@ export async function POST(req: NextRequest) {
           ...validated,
           updated_at: new Date().toISOString(),
         })
-        .eq('user_id', session.user.id)
+        .eq('user_id', user.id)
         .select()
         .single()
 
@@ -136,7 +135,7 @@ export async function POST(req: NextRequest) {
       const { data, error } = await supabase
         .from('lawyers')
         .insert({
-          user_id: session.user.id,
+          user_id: user.id,
           ...validated,
           verified: false,
         })

@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth/auth'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { z } from 'zod'
@@ -14,22 +12,23 @@ const reviewSchema = z.object({
 // POST /api/reviews - Create review
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await req.json()
     const validated = reviewSchema.parse(body)
 
-    const supabase = createClient()
+
 
     // Verify appointment belongs to user and is completed
     const { data: appointment, error: aptError } = await supabase
       .from('appointments')
       .select('lawyer_id, status')
       .eq('id', validated.appointment_id)
-      .eq('client_id', session.user.id)
+      .eq('client_id', user.id)
       .single()
 
     if (aptError || !appointment) {
@@ -62,7 +61,7 @@ export async function POST(req: NextRequest) {
       .from('reviews')
       .insert({
         appointment_id: validated.appointment_id,
-        client_id: session.user.id,
+        client_id: user.id,
         lawyer_id: appointment.lawyer_id,
         rating: validated.rating,
         review_text: validated.review_text,
@@ -113,7 +112,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Lawyer ID required' }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error, count } = await supabase
       .from('reviews')
@@ -154,8 +153,9 @@ export async function GET(req: NextRequest) {
 // PUT /api/reviews/:id/respond - Lawyer response to review
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -169,7 +169,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       )
     }
 
-    const supabase = createClient()
+
 
     // Get review details
     const { data: review, error: getError } = await supabase
@@ -183,7 +183,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 
     // Check if user is the lawyer
-    if (review.lawyer.user_id !== session.user.id) {
+    if (review.lawyer.user_id !== user.id) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 

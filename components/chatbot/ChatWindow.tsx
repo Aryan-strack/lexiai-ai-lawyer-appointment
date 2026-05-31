@@ -110,7 +110,7 @@ export function ChatWindow({ isOpen = true, onClose, fullScreen = false }: ChatW
               </div>
             ) : (
               <>
-                {messages.map((message, index) => (
+                {messages.map((message: any, index: number) => (
                   <ChatMessage key={index} message={message} />
                 ))}
                 {isLoading && <TypingIndicator />}

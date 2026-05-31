@@ -28,7 +28,7 @@ import {
 import { toast } from 'react-hot-toast'
 
 const appointmentSchema = z.object({
-  date: z.date({ required_error: 'Please select a date' }),
+  date: z.date(),
   time: z.string().min(1, 'Please select a time'),
   duration: z.string().min(1, 'Please select duration'),
   notes: z.string().optional(),
@@ -123,8 +123,8 @@ export function AppointmentForm({ lawyerId, lawyerName, feePerHour, onSubmit }: 
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={(date) => setValue('date', date!)}
-                  disabled={(date) => date < new Date()}
+                  onSelect={(date: Date | undefined) => date && setValue('date', date)}
+                  disabled={(date: Date) => date < new Date()}
                   initialFocus
                 />
               </PopoverContent>
@@ -137,7 +137,7 @@ export function AppointmentForm({ lawyerId, lawyerName, feePerHour, onSubmit }: 
           {/* Time Selection */}
           <div className="space-y-2">
             <Label>Select Time</Label>
-            <Select onValueChange={(value) => setValue('time', value)}>
+            <Select onValueChange={(value: string) => setValue('time', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select time slot" />
               </SelectTrigger>
@@ -157,7 +157,7 @@ export function AppointmentForm({ lawyerId, lawyerName, feePerHour, onSubmit }: 
           {/* Duration */}
           <div className="space-y-2">
             <Label>Duration</Label>
-            <Select onValueChange={(value) => setValue('duration', value)}>
+            <Select onValueChange={(value: string) => setValue('duration', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select duration" />
               </SelectTrigger>

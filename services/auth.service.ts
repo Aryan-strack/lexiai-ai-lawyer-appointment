@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { supabaseAdmin } from '@/lib/supabase/admin'
-import { User, Session } from '@supabase/supabase-js'
+import { Session } from '@supabase/supabase-js'
 
 export interface AuthUser {
   id: string
@@ -27,30 +26,20 @@ class AuthService {
     if (error) throw error
     if (!data.user) throw new Error('Signup failed')
 
-    // Create user profile
-    const { data: profile, error: profileError } = await this.supabase
-      .from('users')
-      .insert({
-        id: data.user.id,
-        email,
-        name,
-        role,
-      })
-      .select()
-      .single()
-
-    if (profileError) throw profileError
-
-    // Create free subscription
-    await this.supabase.from('subscriptions').insert({
-      user_id: data.user.id,
-      plan_type: 'free',
-      ai_calls_limit: 50,
-      ai_calls_used: 0,
-      status: 'active',
+    // Create user profile via API route (server-side handles admin operations)
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name, role, userId: data.user.id }),
     })
 
-    return profile
+    if (!res.ok) {
+      const errData = await res.json()
+      throw new Error(errData.error || 'Profile creation failed')
+    }
+
+    const { user: profile } = await res.json()
+    return profile as AuthUser
   }
 
   async signIn(email: string, password: string): Promise<AuthUser> {
@@ -67,6 +56,7 @@ class AuthService {
       .eq('id', data.user.id)
       .single()
 
+    if (!profile) throw new Error('User profile not found')
     return profile as AuthUser
   }
 
@@ -96,7 +86,7 @@ class AuthService {
       .eq('id', user.id)
       .single()
 
-    return profile as AuthUser
+    return (profile as AuthUser) ?? null
   }
 
   async getSession(): Promise<Session | null> {
@@ -133,17 +123,17 @@ class AuthService {
       .single()
 
     if (error) throw error
-    return updated
+    return updated as AuthUser
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const session = await this.getSession()
-    return !!session
+    const { data: { user } } = await this.supabase.auth.getUser()
+    return !!user
   }
 
   async getUserRole(): Promise<string | null> {
     const user = await this.getCurrentUser()
-    return user?.role || null
+    return user?.role ?? null
   }
 
   onAuthStateChange(callback: (event: string, session: Session | null) => void) {

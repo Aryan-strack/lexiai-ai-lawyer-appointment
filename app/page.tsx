@@ -291,7 +291,7 @@ export default function HomePage() {
 
 // Badge component inline
 function Badge({ children, variant = 'default', className = '' }: any) {
-  const variants = {
+  const variants: Record<string, string> = {
     default: 'bg-primary/10 text-primary',
     secondary: 'bg-secondary text-secondary-foreground',
     outline: 'border',

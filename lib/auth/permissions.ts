@@ -72,22 +72,28 @@ export function canAccessResource(
   return resourceOwnerId === currentUserId
 }
 
-// Middleware guard function
 export async function requireAuth(role?: UserRole) {
-  const { getServerSession } = await import('next-auth')
-  const session = await getServerSession()
+  const { createClient } = await import('@/lib/supabase/server')
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
   
-  if (!session) {
+  if (!user) {
     throw new Error('Unauthorized: Please login')
   }
 
-  const userRole = session.user?.role as UserRole
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  const userRole = profile?.role as UserRole
   
   if (role && !hasMinRole(userRole, role)) {
     throw new Error(`Forbidden: ${role} role required`)
   }
 
-  return { session, userRole }
+  return { user, userRole }
 }
 
 // Route protection mapping

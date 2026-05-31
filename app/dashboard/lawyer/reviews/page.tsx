@@ -14,7 +14,7 @@ import { toast } from 'react-hot-toast'
 
 export default function LawyerReviewsPage() {
   const { user } = useAuth()
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState<any[]>([])
   const [averageRating, setAverageRating] = useState(0)
   const [responseText, setResponseText] = useState('')
   const [selectedReview, setSelectedReview] = useState(null)

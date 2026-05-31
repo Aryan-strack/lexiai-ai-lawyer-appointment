@@ -309,7 +309,7 @@ export function LawyerProfile({ lawyer }: LawyerProfileProps) {
                 <CardContent className="p-6 text-center">
                   <div className="text-5xl font-bold text-primary">{lawyer.rating}</div>
                   <div className="flex justify-center mt-2">
-                    <RatingStars rating={lawyer.rating} size="lg" />
+                    <RatingStars rating={lawyer.rating} />
                   </div>
                   <p className="text-sm text-muted-foreground mt-2">
                     Based on {lawyer.total_reviews} reviews
@@ -338,7 +338,12 @@ export function LawyerProfile({ lawyer }: LawyerProfileProps) {
             {/* Reviews List */}
             <div className="md:col-span-2 space-y-4">
               {[1, 2, 3].map((i) => (
-                <ReviewCard key={i} />
+                <ReviewCard key={i} review={{
+                  id: String(i),
+                  rating: 5,
+                  review_text: "Great lawyer, highly recommended!",
+                  created_at: new Date().toISOString(),
+                }} />
               ))}
               <Button variant="outline" className="w-full">
                 Load More Reviews

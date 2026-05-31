@@ -26,7 +26,7 @@ export default function LawyerProfilePage() {
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<{ specialization: string[], experience_years: number, bar_council_number: string, city: string, fee_per_hour: number, bio: string, languages: string[], education: string[] }>({
     specialization: [],
     experience_years: 0,
     bar_council_number: '',
@@ -199,7 +199,8 @@ export default function LawyerProfilePage() {
                   <Input
                     value={profile.bar_council_number}
                     onChange={(e) => setProfile({ ...profile, bar_council_number: e.target.value })}
-                    placeholder="e.g.,                   />
+                    placeholder="e.g., 12345/HC/2020"
+                  />
                 </div>
 
                 <div className="space-y-2">

@@ -2,10 +2,7 @@ import { z } from 'zod'
 
 export const appointmentSchema = z.object({
   lawyerId: z.string().uuid('Invalid lawyer ID'),
-  appointmentDate: z.date({
-    required_error: 'Appointment date is required',
-    invalid_type_error: 'Invalid date',
-  }),
+  appointmentDate: z.date(),
   duration: z.enum(['30', '60', '90', '120']).transform(Number),
   notes: z
     .string()

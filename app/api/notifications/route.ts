@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth/auth'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 
 // GET /api/notifications - Get user notifications
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -16,12 +15,12 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50')
     const unreadOnly = searchParams.get('unreadOnly') === 'true'
 
-    const supabase = createClient()
+
 
     let query = supabase
       .from('notifications')
       .select('*')
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(limit)
 
@@ -39,7 +38,7 @@ export async function GET(req: NextRequest) {
     const { count: unreadCount } = await supabase
       .from('notifications')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .eq('is_read', false)
 
     return NextResponse.json({
@@ -58,18 +57,19 @@ export async function GET(req: NextRequest) {
 // PUT /api/notifications/:id/read - Mark notification as read
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+
 
     const { error } = await supabase
       .from('notifications')
       .update({ is_read: true })
       .eq('id', params.id)
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -88,17 +88,18 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // PUT /api/notifications/read-all - Mark all notifications as read
 export async function PUT_readAll(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+
 
     const { error } = await supabase
       .from('notifications')
       .update({ is_read: true })
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .eq('is_read', false)
 
     if (error) {
@@ -118,18 +119,19 @@ export async function PUT_readAll(req: NextRequest) {
 // DELETE /api/notifications/:id - Delete notification
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+
 
     const { error } = await supabase
       .from('notifications')
       .delete()
       .eq('id', params.id)
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -148,17 +150,18 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 // DELETE /api/notifications/clear-all - Clear all notifications
 export async function DELETE_clearAll(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+
 
     const { error } = await supabase
       .from('notifications')
       .delete()
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })

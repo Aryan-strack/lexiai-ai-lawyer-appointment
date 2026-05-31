@@ -73,10 +73,9 @@ export function AppointmentCalendar({ lawyerId, onSlotSelect }: AppointmentCalen
                 Available Slots for {format(selectedDate, 'MMMM dd, yyyy')}
               </h3>
               <TimeSlotPicker
-                slots={availableTimeSlots}
-                selectedSlot={selectedTime}
-                onSelectSlot={handleTimeSelect}
-                isLoading={isLoading}
+                date={selectedDate}
+                availableSlots={availableTimeSlots}
+                onSelect={handleTimeSelect}
               />
             </div>
           </div>

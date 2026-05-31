@@ -14,6 +14,7 @@ const plans = {
     {
       name: 'Basic',
       price: 0,
+      yearlyPrice: undefined,
       description: 'Perfect for occasional legal questions',
       features: [
         'AI Legal Assistant (50 queries/month)',
@@ -24,10 +25,12 @@ const plans = {
       cta: 'Get Started',
       popular: false,
       icon: Sparkles,
+      savings: undefined,
     },
     {
       name: 'Pro',
       price: 29,
+      yearlyPrice: undefined,
       description: 'Best for regular legal needs',
       features: [
         'Unlimited AI queries',
@@ -40,10 +43,12 @@ const plans = {
       cta: 'Start Free Trial',
       popular: true,
       icon: Star,
+      savings: undefined,
     },
     {
       name: 'Enterprise',
       price: 99,
+      yearlyPrice: undefined,
       description: 'For law firms and businesses',
       features: [
         'Everything in Pro',
@@ -57,6 +62,7 @@ const plans = {
       cta: 'Contact Sales',
       popular: false,
       icon: Crown,
+      savings: undefined,
     },
   ],
   yearly: [
@@ -196,7 +202,7 @@ export default function PricingPage() {
                   <ul className="space-y-3">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-green-500 shrink-0" />
                         <span className="text-muted-foreground">{feature}</span>
                       </li>
                     ))}

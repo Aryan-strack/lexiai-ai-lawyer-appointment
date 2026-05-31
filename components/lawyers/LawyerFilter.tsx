@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Checkbox } from '@/components/ui/checkbox'
-import { specialties, cities } from '@/constants/specialties'
+import { SPECIALTIES, CITIES } from '@/constants/specialties'
 
 export function LawyerFilter() {
   const [priceRange, setPriceRange] = useState([0, 500])
@@ -62,7 +62,7 @@ export function LawyerFilter() {
         <div>
           <Label className="text-sm font-medium mb-2 block">Specialization</Label>
           <div className="grid grid-cols-2 gap-2">
-            {specialties.map((specialty) => (
+            {SPECIALTIES.map((specialty: string) => (
               <div key={specialty} className="flex items-center space-x-2">
                 <Checkbox
                   id={specialty}
@@ -81,7 +81,7 @@ export function LawyerFilter() {
         <div>
           <Label className="text-sm font-medium mb-2 block">City</Label>
           <div className="grid grid-cols-2 gap-2">
-            {cities.map((city) => (
+            {CITIES.map((city: string) => (
               <div key={city} className="flex items-center space-x-2">
                 <Checkbox
                   id={city}
