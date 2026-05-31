@@ -5,9 +5,15 @@ import { Database } from '@/types/supabase'
 export async function createClient() {
   const cookieStore = await cookies() // ✅ Next.js 15: cookies() is async
 
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  
+  const validUrl = url.startsWith('http') ? url : 'https://dummy.supabase.co'
+  const validKey = key || 'dummy_key'
+
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    validUrl,
+    validKey,
     {
       cookies: {
         getAll() {

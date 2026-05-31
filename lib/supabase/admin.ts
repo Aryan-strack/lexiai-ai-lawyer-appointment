@@ -3,9 +3,14 @@ import { Database } from '@/types/supabase'
 
 // Admin client with service role (bypasses RLS)
 // Use this ONLY in server-side API routes
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const key = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+const validUrl = url.startsWith('http') ? url : 'https://dummy.supabase.co'
+const validKey = key || 'dummy_key'
+
 const supabaseAdmin = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  validUrl,
+  validKey,
   {
     auth: {
       autoRefreshToken: false,

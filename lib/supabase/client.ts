@@ -6,10 +6,14 @@ let supabaseClient: ReturnType<typeof createBrowserClient<Database>> | null = nu
 export function createClient() {
   if (supabaseClient) return supabaseClient
 
-  supabaseClient = createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  
+  // Use dummy url/key to prevent crashes in UI if not configured
+  const validUrl = url.startsWith('http') ? url : 'https://dummy.supabase.co'
+  const validKey = key || 'dummy_key'
+
+  supabaseClient = createBrowserClient<Database>(validUrl, validKey)
 
   return supabaseClient
 }

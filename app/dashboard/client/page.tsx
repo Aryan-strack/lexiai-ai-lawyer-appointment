@@ -90,7 +90,7 @@ export default function ClientDashboard() {
     },
     {
       title: 'Total Spent',
-      value: `$${stats.totalSpent.toLocaleString()}`,
+      value: `PKR ${stats.totalSpent.toLocaleString()}`,
       icon: <DollarSign className="h-4 w-4" />,
     },
     {
@@ -159,7 +159,7 @@ export default function ClientDashboard() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">${apt.fee}</p>
+                        <p className="font-semibold">PKR {apt.fee?.toLocaleString()}</p>
                         <p className="text-xs capitalize text-muted-foreground">{apt.status}</p>
                       </div>
                     </div>

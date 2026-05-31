@@ -81,7 +81,7 @@ export default function LawyerDashboard() {
     },
     {
       title: 'Total Earnings',
-      value: `$${stats.totalEarnings.toLocaleString()}`,
+      value: `PKR ${stats.totalEarnings.toLocaleString()}`,
       icon: <DollarSign className="h-4 w-4" />,
       change: 15,
       trend: 'up' as const,
@@ -142,7 +142,7 @@ export default function LawyerDashboard() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">${apt.fee}</p>
+                        <p className="font-semibold">PKR {apt.fee?.toLocaleString()}</p>
                         <p className="text-xs capitalize text-muted-foreground">{apt.status}</p>
                       </div>
                     </div>
