@@ -2,25 +2,38 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Protected routes configuration
+const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
+  throw new Error(
+    'Invalid Supabase URL. Set NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL to a valid HTTP(S) Supabase project URL.'
+  )
+}
+
+if (!supabaseAnonKey) {
+  throw new Error(
+    'Missing Supabase anon key. Set NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment.'
+  )
+}
+
 const protectedRoutes = {
   admin: ['/dashboard/admin', '/api/admin'],
   lawyer: ['/dashboard/lawyer', '/api/lawyer'],
-  client: ['/dashboard/client', '/api/client', '/chat', '/appointments', '/video-consultation'],
+  client: ['/dashboard/client', '/chat', '/appointments', '/video-consultation'],
   auth: ['/login', '/register', '/forgot-password', '/reset-password'],
 }
 
 const publicRoutes = ['/', '/about', '/contact', '/pricing', '/faq', '/lawyers', '/ai-assistant']
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   let res = NextResponse.next({
     request: { headers: req.headers },
   })
 
-  // Create Supabase client using @supabase/ssr (modern approach)
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -37,13 +50,11 @@ export async function middleware(req: NextRequest) {
     }
   )
 
-  // Get session — refreshes session if expired (important!)
   const { data: { user } } = await supabase.auth.getUser()
 
   const path = req.nextUrl.pathname
   const isAuthenticated = !!user
 
-  // Get user role if authenticated
   let userRole: string | null = null
   if (isAuthenticated && user) {
     const { data: userData } = await supabase
@@ -54,13 +65,11 @@ export async function middleware(req: NextRequest) {
     userRole = userData?.role || null
   }
 
-  // Redirect authenticated users away from auth pages
   if (isAuthenticated && protectedRoutes.auth.some(route => path.startsWith(route))) {
     const redirectTo = getDashboardRedirect(userRole)
     return NextResponse.redirect(new URL(redirectTo, req.url))
   }
 
-  // Protect admin routes
   if (protectedRoutes.admin.some(route => path.startsWith(route))) {
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL('/login', req.url))
@@ -70,7 +79,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Protect lawyer routes
   if (protectedRoutes.lawyer.some(route => path.startsWith(route))) {
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL('/login', req.url))
@@ -80,14 +88,12 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Protect client routes
   if (protectedRoutes.client.some(route => path.startsWith(route))) {
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
   }
 
-  // Add security headers
   const securityHeaders: Record<string, string> = {
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
@@ -114,9 +120,6 @@ function getDashboardRedirect(role: string | null): string {
   }
 }
 
-// Configure which routes to run middleware on
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|public|api/webhook).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|public|api/webhook).*)'],
 }
