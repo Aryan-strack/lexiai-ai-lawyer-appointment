@@ -18,13 +18,7 @@ export default function ClientPaymentsPage() {
   })
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchPayments()
-    }
-  }, [user])
-
-  const fetchPayments = async () => {
+  async function fetchPayments() {
     const supabase = createClient()
     
     const { data, error } = await supabase
@@ -38,6 +32,12 @@ export default function ClientPaymentsPage() {
         )
       `)
       .eq('client_id', user?.id)
+
+  useEffect(() => {
+    if (user) {
+      fetchPayments()
+    }
+  }, [user])
       .order('created_at', { ascending: false })
 
     if (!error && data) {

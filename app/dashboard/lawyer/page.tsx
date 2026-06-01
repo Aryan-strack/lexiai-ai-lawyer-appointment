@@ -21,46 +21,46 @@ export default function LawyerDashboard() {
   const [recentAppointments, setRecentAppointments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
+  async function fetchDashboardData() {
+    const supabase = createClient()
+    
+    // Get lawyer profile
+    const { data: lawyer } = await supabase
+      .from('lawyers')
+      .select('id')
+      .eq('user_id', user?.id)
+      .single()
+
+    if (lawyer) {
+      // Get appointments
+      const { data: appointments } = await supabase
+        .from('appointments')
+        .select('*, client:client_id(name)')
+        .eq('lawyer_id', lawyer.id)
+        .order('created_at', { ascending: false })
+
+      // Get unique clients
+      const uniqueClients = new Set(appointments?.map(apt => apt.client_id))
+      
+      // Calculate total earnings
+      const totalEarnings = appointments
+        ?.filter(apt => apt.payment_status === 'paid')
+        .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
+
+      setStats({
+        totalAppointments: appointments?.length || 0,
+        totalClients: uniqueClients.size,
+        totalEarnings,
+        averageRating: 4.8,
+      })
+
+      setRecentAppointments(appointments?.slice(0, 5) || [])
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (user) {
-      const fetchDashboardData = async () => {
-        const supabase = createClient()
-        
-        // Get lawyer profile
-        const { data: lawyer } = await supabase
-          .from('lawyers')
-          .select('id')
-          .eq('user_id', user?.id)
-          .single()
-
-        if (lawyer) {
-          // Get appointments
-          const { data: appointments } = await supabase
-            .from('appointments')
-            .select('*, client:client_id(name)')
-            .eq('lawyer_id', lawyer.id)
-            .order('created_at', { ascending: false })
-
-          // Get unique clients
-          const uniqueClients = new Set(appointments?.map(apt => apt.client_id))
-          
-          // Calculate total earnings
-          const totalEarnings = appointments
-            ?.filter(apt => apt.payment_status === 'paid')
-            .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
-
-          setStats({
-            totalAppointments: appointments?.length || 0,
-            totalClients: uniqueClients.size,
-            totalEarnings,
-            averageRating: 4.8,
-          })
-
-          setRecentAppointments(appointments?.slice(0, 5) || [])
-        }
-        setIsLoading(false)
-      }
-
       fetchDashboardData()
     }
   }, [user])

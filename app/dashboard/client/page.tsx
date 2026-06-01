@@ -23,56 +23,56 @@ export default function ClientDashboard() {
   const [recentDocuments, setRecentDocuments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
+  async function fetchDashboardData() {
+    const supabase = createClient()
+    
+    // Get appointments
+    const { data: appointments } = await supabase
+      .from('appointments')
+      .select(`
+        *,
+        lawyer:lawyer_id (
+          id,
+          users:user_id (
+            name,
+            avatar_url
+          )
+        )
+      `)
+      .eq('client_id', user?.id)
+      .order('appointment_date', { ascending: true })
+
+    // Get documents
+    const { data: documents } = await supabase
+      .from('documents')
+      .select('*')
+      .eq('user_id', user?.id)
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    // Calculate stats
+    const totalSpent = appointments
+      ?.filter(apt => apt.payment_status === 'paid')
+      .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
+
+    const upcoming = appointments?.filter(
+      apt => apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()
+    ) || []
+
+    setStats({
+      totalAppointments: appointments?.length || 0,
+      totalDocuments: documents?.length || 0,
+      totalSpent,
+      upcomingAppointments: upcoming.length,
+    })
+
+    setUpcomingAppointments(upcoming.slice(0, 5))
+    setRecentDocuments(documents || [])
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (user) {
-      const fetchDashboardData = async () => {
-        const supabase = createClient()
-        
-        // Get appointments
-        const { data: appointments } = await supabase
-          .from('appointments')
-          .select(`
-            *,
-            lawyer:lawyer_id (
-              id,
-              users:user_id (
-                name,
-                avatar_url
-              )
-            )
-          `)
-          .eq('client_id', user?.id)
-          .order('appointment_date', { ascending: true })
-
-        // Get documents
-        const { data: documents } = await supabase
-          .from('documents')
-          .select('*')
-          .eq('user_id', user?.id)
-          .order('created_at', { ascending: false })
-          .limit(5)
-
-        // Calculate stats
-        const totalSpent = appointments
-          ?.filter(apt => apt.payment_status === 'paid')
-          .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
-
-        const upcoming = appointments?.filter(
-          apt => apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()
-        ) || []
-
-        setStats({
-          totalAppointments: appointments?.length || 0,
-          totalDocuments: documents?.length || 0,
-          totalSpent,
-          upcomingAppointments: upcoming.length,
-        })
-
-        setUpcomingAppointments(upcoming.slice(0, 5))
-        setRecentDocuments(documents || [])
-        setIsLoading(false)
-      }
-
       fetchDashboardData()
     }
   }, [user])

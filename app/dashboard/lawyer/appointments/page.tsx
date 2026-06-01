@@ -14,13 +14,7 @@ export default function LawyerAppointmentsPage() {
   const [appointments, setAppointments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchAppointments()
-    }
-  }, [user])
-
-  const fetchAppointments = async () => {
+  async function fetchAppointments() {
     const supabase = createClient()
     
     const { data: lawyer } = await supabase
@@ -61,6 +55,12 @@ export default function LawyerAppointmentsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchAppointments()
+    }
+  }, [user])
 
   const handleStatusChange = async (appointmentId: string, newStatus: string) => {
     const supabase = createClient()

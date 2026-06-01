@@ -13,11 +13,7 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  const fetchUsers = async () => {
+  async function fetchUsers() {
     const supabase = createClient()
     const { data, error } = await supabase
       .from('users')
@@ -29,6 +25,10 @@ export default function AdminUsersPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     const supabase = createClient()

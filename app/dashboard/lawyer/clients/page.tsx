@@ -18,13 +18,7 @@ export default function LawyerClientsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchClients()
-    }
-  }, [user])
-
-  const fetchClients = async () => {
+  async function fetchClients() {
     const supabase = createClient()
     
     const { data: lawyer } = await supabase
@@ -49,7 +43,6 @@ export default function LawyerClientsPage() {
         .eq('lawyer_id', lawyer.id)
         .eq('status', 'completed')
 
-      // Get unique clients
       const uniqueClients = new Map()
       appointments?.forEach((apt: any) => {
         if (apt.client && !uniqueClients.has(apt.client.id)) {
@@ -68,6 +61,12 @@ export default function LawyerClientsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchClients()
+    }
+  }, [user])
 
   const filteredClients = clients.filter((client: any) =>
     client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

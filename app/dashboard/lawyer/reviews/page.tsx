@@ -21,39 +21,39 @@ export default function LawyerReviewsPage() {
   const [selectedReview, setSelectedReview] = useState<Review | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
+  async function fetchReviews() {
+    const supabase = createClient()
+    
+    const { data: lawyer } = await supabase
+      .from('lawyers')
+      .select('id')
+      .eq('user_id', user?.id)
+      .single()
+
+    if (lawyer) {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select(`
+          *,
+          client:client_id (
+            name,
+            avatar_url
+          )
+        `)
+        .eq('lawyer_id', lawyer.id)
+        .order('created_at', { ascending: false })
+
+      if (!error && data) {
+        setReviews(data)
+        const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length || 0
+        setAverageRating(avg)
+      }
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (user) {
-      const fetchReviews = async () => {
-        const supabase = createClient()
-        
-        const { data: lawyer } = await supabase
-          .from('lawyers')
-          .select('id')
-          .eq('user_id', user?.id)
-          .single()
-
-        if (lawyer) {
-          const { data, error } = await supabase
-            .from('reviews')
-            .select(`
-              *,
-              client:client_id (
-                name,
-                avatar_url
-              )
-            `)
-            .eq('lawyer_id', lawyer.id)
-            .order('created_at', { ascending: false })
-
-          if (!error && data) {
-            setReviews(data)
-            const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length || 0
-            setAverageRating(avg)
-          }
-        }
-        setIsLoading(false)
-      }
-
       fetchReviews()
     }
   }, [user])

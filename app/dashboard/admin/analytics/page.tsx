@@ -23,10 +23,6 @@ export default function AdminAnalyticsPage() {
   })
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    fetchAnalytics()
-  }, [timeRange])
-
   const fetchAnalytics = async () => {
     const supabase = createClient()
     
@@ -35,6 +31,41 @@ export default function AdminAnalyticsPage() {
       .from('users')
       .select('created_at')
       .gte('created_at', getDateRange())
+
+    // Get revenue
+    const { data: revenue } = await supabase
+      .from('appointments')
+      .select('created_at, fee')
+      .eq('payment_status', 'paid')
+      .gte('created_at', getDateRange())
+
+    // Get lawyer distribution by specialization
+    const { data: lawyers } = await supabase
+      .from('lawyers')
+      .select('specialization')
+
+    // Process data
+    const userGrowthData = groupByDate(users || [], 'users')
+    const revenueData = groupByDate(revenue || [], 'revenue')
+    const lawyerDistData = processLawyerDistribution(lawyers || [])
+
+    setAnalytics({
+      userGrowth: userGrowthData,
+      revenueTrend: revenueData,
+      lawyerDistribution: lawyerDistData,
+      aiUsage: [
+        { name: 'Legal Questions', value: 45 },
+        { name: 'Lawyer Search', value: 30 },
+        { name: 'Document Help', value: 15 },
+        { name: 'Appointments', value: 10 },
+      ],
+    })
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    fetchAnalytics()
+  }, [timeRange])
 
     // Get revenue
     const { data: revenue } = await supabase

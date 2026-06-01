@@ -13,11 +13,7 @@ export default function AdminSubscriptionsPage() {
   const [subscriptions, setSubscriptions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    fetchSubscriptions()
-  }, [])
-
-  const fetchSubscriptions = async () => {
+  async function fetchSubscriptions() {
     const supabase = createClient()
     const { data, error } = await supabase
       .from('subscriptions')
@@ -35,6 +31,10 @@ export default function AdminSubscriptionsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    fetchSubscriptions()
+  }, [])
 
   const getStatusBadge = (status: string) => {
     switch (status) {

@@ -18,13 +18,7 @@ export default function ClientDocumentsPage() {
   const [documents, setDocuments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchDocuments()
-    }
-  }, [user])
-
-  const fetchDocuments = async () => {
+  async function fetchDocuments() {
     const supabase = createClient()
     
     const { data, error } = await supabase
@@ -38,6 +32,12 @@ export default function ClientDocumentsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchDocuments()
+    }
+  }, [user])
 
   const handleDelete = async (documentId: string, fileUrl: string) => {
     const supabase = createClient()

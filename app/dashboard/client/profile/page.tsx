@@ -23,13 +23,7 @@ export default function ClientProfilePage() {
     avatar_url: '',
   })
 
-  useEffect(() => {
-    if (user) {
-      fetchProfile()
-    }
-  }, [user])
-
-  const fetchProfile = async () => {
+  async function fetchProfile() {
     const supabase = createClient()
     const { data, error } = await supabase
       .from('users')
@@ -38,6 +32,21 @@ export default function ClientProfilePage() {
       .single()
 
     if (!error && data) {
+      setProfile({
+        name: data.name || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        avatar_url: data.avatar_url || '',
+      })
+    }
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile()
+    }
+  }, [user])
       setProfile({
         name: data.name || '',
         email: data.email || '',

@@ -15,6 +15,21 @@ export default function ClientNotificationsPage() {
   const [notifications, setNotifications] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
+  async function fetchNotifications() {
+    const supabase = createClient()
+    
+    const { data, error } = await supabase
+      .from('notifications')
+      .select('*')
+      .eq('user_id', user?.id)
+      .order('created_at', { ascending: false })
+
+    if (!error && data) {
+      setNotifications(data)
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (user) {
       fetchNotifications()
@@ -38,15 +53,6 @@ export default function ClientNotificationsPage() {
       }
     }
   }, [user])
-
-  const fetchNotifications = async () => {
-    const supabase = createClient()
-    
-    const { data, error } = await supabase
-      .from('notifications')
-      .select('*')
-      .eq('user_id', user?.id)
-      .order('created_at', { ascending: false })
 
     if (!error && data) {
       setNotifications(data)

@@ -21,13 +21,7 @@ export default function LawyerEarningsPage() {
   })
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchEarnings()
-    }
-  }, [user])
-
-  const fetchEarnings = async () => {
+  async function fetchEarnings() {
     const supabase = createClient()
     
     const { data: lawyer } = await supabase
@@ -62,6 +56,12 @@ export default function LawyerEarningsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchEarnings()
+    }
+  }, [user])
 
   const exportEarnings = () => {
     const csv = [

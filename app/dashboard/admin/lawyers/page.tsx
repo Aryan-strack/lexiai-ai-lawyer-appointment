@@ -15,11 +15,7 @@ export default function AdminLawyersPage() {
   const [lawyers, setLawyers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    fetchLawyers()
-  }, [])
-
-  const fetchLawyers = async () => {
+  async function fetchLawyers() {
     const supabase = createClient()
     const { data, error } = await supabase
       .from('lawyers')
@@ -38,6 +34,10 @@ export default function AdminLawyersPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    fetchLawyers()
+  }, [])
 
   const verifyLawyer = async (lawyerId: string, verify: boolean) => {
     const supabase = createClient()

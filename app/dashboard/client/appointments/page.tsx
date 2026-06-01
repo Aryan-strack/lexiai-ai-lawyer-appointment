@@ -13,13 +13,7 @@ export default function ClientAppointmentsPage() {
   const [appointments, setAppointments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchAppointments()
-    }
-  }, [user])
-
-  const fetchAppointments = async () => {
+  async function fetchAppointments() {
     const supabase = createClient()
     
     const { data, error } = await supabase
@@ -56,6 +50,12 @@ export default function ClientAppointmentsPage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchAppointments()
+    }
+  }, [user])
 
   const upcomingAppointments = appointments.filter(apt => 
     apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()
