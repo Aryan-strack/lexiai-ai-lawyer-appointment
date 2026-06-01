@@ -70,11 +70,11 @@ export function Sidebar({ role }: SidebarProps) {
         {/* User Info */}
         <div className="p-4 border-b">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-primary font-semibold">
-                {user?.name?.charAt(0).toUpperCase()}
-              </span>
-            </div>
+             <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+               <span className="text-primary font-semibold">
+                 {user?.name ? user?.name.charAt(0).toUpperCase() : ''}
+               </span>
+             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{user?.name}</p>
               <p className="text-xs text-muted-foreground capitalize">{role}</p>

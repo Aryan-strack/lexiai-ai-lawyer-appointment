@@ -8,25 +8,29 @@ export function formatDate(date: Date | string | null, formatStr: string = 'PPP'
 }
 
 // Format time
-export function formatTime(date: Date | string, formatStr: string = 'h:mm a'): string {
+export function formatTime(date: Date | string | null, formatStr: string = 'h:mm a'): string {
+  if (!date) return 'N/A'
   const dateObj = typeof date === 'string' ? new Date(date) : date
   return format(dateObj, formatStr)
 }
 
 // Format date and time together
-export function formatDateTime(date: Date | string): string {
+export function formatDateTime(date: Date | string | null): string {
+  if (!date) return 'N/A'
   const dateObj = typeof date === 'string' ? new Date(date) : date
   return `${formatDate(dateObj)} at ${formatTime(dateObj)}`
 }
 
 // Get relative time (e.g., "2 hours ago")
-export function formatRelativeTime(date: Date | string): string {
+export function formatRelativeTime(date: Date | string | null): string {
+  if (!date) return 'N/A'
   const dateObj = typeof date === 'string' ? new Date(date) : date
   return formatDistance(dateObj, new Date(), { addSuffix: true })
 }
 
 // Smart date formatter (Today, Yesterday, or date)
-export function formatSmartDate(date: Date | string): string {
+export function formatSmartDate(date: Date | string | null): string {
+  if (!date) return 'N/A'
   const dateObj = typeof date === 'string' ? new Date(date) : date
   
   if (isToday(dateObj)) {
@@ -70,12 +74,13 @@ export function getTimeSlots(
 }
 
 // Format date range
-export function formatDateRange(startDate: Date | string, endDate: Date | string): string {
+export function formatDateRange(startDate: Date | string | null, endDate: Date | string | null): string {
+  if (!startDate || !endDate) return 'N/A - N/A'
   const start = typeof startDate === 'string' ? new Date(startDate) : startDate
   const end = typeof endDate === 'string' ? new Date(endDate) : endDate
   
   if (format(start, 'MMMM yyyy') === format(end, 'MMMM yyyy')) {
-    return `${format(start, 'MMMM d')} - ${format(end, 'd, yyyy')}`
+    return `${format(start, 'MMM d')} - ${format(end, 'd, yyyy')}`
   }
   return `${format(start, 'MMM d')} - ${format(end, 'MMM d, yyyy')}`
 }

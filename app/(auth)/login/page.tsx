@@ -37,32 +37,32 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      await signIn(data.email, data.password)
-      toast.success('Welcome back!')
-      router.push('/dashboard/client')
-    } catch (error: any) {
-      const msg = error?.message || 'Login failed. Please try again.'
-      if (msg.includes('Invalid login credentials')) {
-        toast.error('Email ya password galat hai')
-      } else if (msg.includes('Email not confirmed')) {
-        toast.error('Apna email verify karein. Inbox check karein.')
-      } else {
-        toast.error(msg)
-      }
-    }
-  }
+   const onSubmit = async (data: LoginFormData) => {
+     try {
+       const user = await signIn(data.email, data.password)
+       toast.success('Welcome back!')
+       router.push(`/dashboard/${user.role}`)
+     } catch (error) {
+       const msg = (error as Error)?.message || 'Login failed. Please try again.'
+       if (msg.includes('Invalid login credentials')) {
+         toast.error('Email ya password galat hai')
+       } else if (msg.includes('Email not confirmed')) {
+         toast.error('Apna email verify karein. Inbox check karein.')
+       } else {
+         toast.error(msg)
+       }
+     }
+   }
 
-  const handleGoogleLogin = async () => {
-    setGoogleLoading(true)
-    try {
-      await signInWithGoogle()
-    } catch (error: any) {
-      toast.error(error?.message || 'Google login failed')
-      setGoogleLoading(false)
-    }
-  }
+   const handleGoogleLogin = async () => {
+     setGoogleLoading(true)
+     try {
+       await signInWithGoogle()
+     } catch (error) {
+       toast.error((error as Error)?.message || 'Google login failed')
+       setGoogleLoading(false)
+     }
+   }
 
   return (
     <motion.div

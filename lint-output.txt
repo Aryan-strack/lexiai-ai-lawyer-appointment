@@ -1,0 +1,723 @@
+﻿
+> lexiai@0.1.0 lint
+> eslint
+
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(auth)\forgot-password\page.tsx
+  37:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(auth)\register\page.tsx
+  72:24  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(auth)\register\page.tsx:72:24
+  70 |   })
+  71 |
+> 72 |   const selectedRole = watch('role')
+     |                        ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  73 |
+  74 |   const onSubmit = async (data: RegisterFormData) => {
+  75 |     try {  react-hooks/incompatible-library
+  79:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  93:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(auth)\reset-password\page.tsx
+  50:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(public)\about\page.tsx
+  62:33  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(public)\contact\page.tsx
+   63:27  warning  'data' is defined but never used                                 @typescript-eslint/no-unused-vars
+   78:31  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   78:73  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  112:49  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(public)\faq\page.tsx
+  145:18  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  145:40  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(public)\lawyers\page.tsx
+  28:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\(public)\page.tsx
+    8:3   warning  'Scale' is defined but never used         @typescript-eslint/no-unused-vars
+   15:3   warning  'CheckCircle' is defined but never used   @typescript-eslint/no-unused-vars
+   18:3   warning  'Lock' is defined but never used          @typescript-eslint/no-unused-vars
+  293:67  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\ai\route.ts
+  79:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\appointments\[id]\route.ts
+  46:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\auth\route.ts
+  84:27  warning  'req' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\lawyers\route.ts
+  3:10  warning  'supabaseAdmin' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\notifications\route.ts
+    3:10  warning  'supabaseAdmin' is defined but never used  @typescript-eslint/no-unused-vars
+   89:35  warning  'req' is defined but never used            @typescript-eslint/no-unused-vars
+  151:39  warning  'req' is defined but never used            @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\api\payments\create-subscription\route.ts
+  72:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\chat\page.tsx
+  21:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\analytics\page.tsx
+   11:10  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   27:5   error    Error: Cannot access variable before it is declared
+
+`fetchAnalytics` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\analytics\page.tsx:27:5
+  25 |
+  26 |   useEffect(() => {
+> 27 |     fetchAnalytics()
+     |     ^^^^^^^^^^^^^^ `fetchAnalytics` accessed before it is declared
+  28 |   }, [timeRange])
+  29 |
+  30 |   const fetchAnalytics = async () => {
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\analytics\page.tsx:30:3
+  28 |   }, [timeRange])
+  29 |
+> 30 |   const fetchAnalytics = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 32 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 67 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 68 |   }
+     | ^^^^ `fetchAnalytics` is declared here
+  69 |
+  70 |   const getDateRange = () => {
+  71 |     const date = new Date()  react-hooks/immutability
+   28:6   warning  React Hook useEffect has a missing dependency: 'fetchAnalytics'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+   78:30  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+   79:20  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+   89:47  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+   90:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  194:63  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  226:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\lawyers\page.tsx
+  19:5   error  Error: Cannot access variable before it is declared
+
+`fetchLawyers` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\lawyers\page.tsx:19:5
+  17 |
+  18 |   useEffect(() => {
+> 19 |     fetchLawyers()
+     |     ^^^^^^^^^^^^ `fetchLawyers` accessed before it is declared
+  20 |   }, [])
+  21 |
+  22 |   const fetchLawyers = async () => {
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\lawyers\page.tsx:22:3
+  20 |   }, [])
+  21 |
+> 22 |   const fetchLawyers = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |     const { data, error } = await supabase
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 39 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 40 |   }
+     | ^^^^ `fetchLawyers` is declared here
+  41 |
+  42 |   const verifyLawyer = async (lawyerId: string, verify: boolean) => {
+  43 |     const supabase = createClient()  react-hooks/immutability
+  95:39  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\page.tsx
+   8:46  warning  'TrendingUp' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  51:27  error    Error: Cannot access variable before it is declared
+
+`groupByMonth` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\page.tsx:51:27
+  49 |         .gte('created_at', new Date(new Date().setMonth(new Date().getMonth() - 6)).toISOString())
+  50 |
+> 51 |       const monthlyData = groupByMonth(appointments || [])
+     |                           ^^^^^^^^^^^^ `groupByMonth` accessed before it is declared
+  52 |       setRevenueData(monthlyData)
+  53 |       setIsLoading(false)
+  54 |     }
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\page.tsx:59:3
+  57 |   }, [])
+  58 |
+> 59 |   const groupByMonth = (appointments: any[]) => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 60 |     const months: any = {}
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 61 |     appointments.forEach(apt => {
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 73 |     }))
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 74 |   }
+     | ^^^^ `groupByMonth` is declared here
+  75 |
+  76 |   const statItems = [
+  77 |     {  react-hooks/immutability
+  59:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  60:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  69:64  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\subscriptions\page.tsx
+  10:22  warning  'formatCurrency' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  17:5   error    Error: Cannot access variable before it is declared
+
+`fetchSubscriptions` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\subscriptions\page.tsx:17:5
+  15 |
+  16 |   useEffect(() => {
+> 17 |     fetchSubscriptions()
+     |     ^^^^^^^^^^^^^^^^^^ `fetchSubscriptions` accessed before it is declared
+  18 |   }, [])
+  19 |
+  20 |   const fetchSubscriptions = async () => {
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\subscriptions\page.tsx:20:3
+  18 |   }, [])
+  19 |
+> 20 |   const fetchSubscriptions = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |     const { data, error } = await supabase
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 37 |   }
+     | ^^^^ `fetchSubscriptions` is declared here
+  38 |
+  39 |   const getStatusBadge = (status: string) => {
+  40 |     switch (status) {  react-hooks/immutability
+  84:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\users\page.tsx
+   6:10  warning  'Card' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+   6:16  warning  'CardContent' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   6:29  warning  'CardHeader' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   6:41  warning  'CardTitle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  17:5   error    Error: Cannot access variable before it is declared
+
+`fetchUsers` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\users\page.tsx:17:5
+  15 |
+  16 |   useEffect(() => {
+> 17 |     fetchUsers()
+     |     ^^^^^^^^^^ `fetchUsers` accessed before it is declared
+  18 |   }, [])
+  19 |
+  20 |   const fetchUsers = async () => {
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\admin\users\page.tsx:20:3
+  18 |   }, [])
+  19 |
+> 20 |   const fetchUsers = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |     const { data, error } = await supabase
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 30 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |   }
+     | ^^^^ `fetchUsers` is declared here
+  32 |
+  33 |   const handleRoleChange = async (userId: string, newRole: string) => {
+  34 |     const supabase = createClient()  react-hooks/immutability
+  66:27  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\appointments\page.tsx
+  18:7   error    Error: Cannot access variable before it is declared
+
+`fetchAppointments` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\appointments\page.tsx:18:7
+  16 |   useEffect(() => {
+  17 |     if (user) {
+> 18 |       fetchAppointments()
+     |       ^^^^^^^^^^^^^^^^^ `fetchAppointments` accessed before it is declared
+  19 |     }
+  20 |   }, [user])
+  21 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\appointments\page.tsx:22:3
+  20 |   }, [user])
+  21 |
+> 22 |   const fetchAppointments = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 57 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 58 |   }
+     | ^^^^ `fetchAppointments` is declared here
+  59 |
+  60 |   const upcomingAppointments = appointments.filter(apt => 
+  61 |     apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()  react-hooks/immutability
+  20:6   warning  React Hook useEffect has a missing dependency: 'fetchAppointments'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/exhaustive-deps
+  43:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\documents\page.tsx
+   23:7   error    Error: Cannot access variable before it is declared
+
+`fetchDocuments` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\documents\page.tsx:23:7
+  21 |   useEffect(() => {
+  22 |     if (user) {
+> 23 |       fetchDocuments()
+     |       ^^^^^^^^^^^^^^ `fetchDocuments` accessed before it is declared
+  24 |     }
+  25 |   }, [user])
+  26 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\documents\page.tsx:27:3
+  25 |   }, [user])
+  26 |
+> 27 |   const fetchDocuments = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 29 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 39 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 40 |   }
+     | ^^^^ `fetchDocuments` is declared here
+  41 |
+  42 |   const handleDelete = async (documentId: string, fileUrl: string) => {
+  43 |     const supabase = createClient()  react-hooks/immutability
+   25:6   warning  React Hook useEffect has a missing dependency: 'fetchDocuments'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  124:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\notifications\page.tsx
+   20:7   error    Error: Cannot access variable before it is declared
+
+`fetchNotifications` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\notifications\page.tsx:20:7
+  18 |   useEffect(() => {
+  19 |     if (user) {
+> 20 |       fetchNotifications()
+     |       ^^^^^^^^^^^^^^^^^^ `fetchNotifications` accessed before it is declared
+  21 |       
+  22 |       // Subscribe to realtime notifications
+  23 |       const supabase = createClient()
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\notifications\page.tsx:42:3
+  40 |   }, [user])
+  41 |
+> 42 |   const fetchNotifications = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 43 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 54 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 55 |   }
+     | ^^^^ `fetchNotifications` is declared here
+  56 |
+  57 |   const markAsRead = async (notificationId: string) => {
+  58 |     const supabase = createClient()  react-hooks/immutability
+   40:6   warning  React Hook useEffect has a missing dependency: 'fetchNotifications'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react-hooks/exhaustive-deps
+  154:57  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react/no-unescaped-entities
+  158:51  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\page.tsx
+  118:57  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  118:64  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  146:52  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  194:46  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\payments\page.tsx
+  23:7   error    Error: Cannot access variable before it is declared
+
+`fetchPayments` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\payments\page.tsx:23:7
+  21 |   useEffect(() => {
+  22 |     if (user) {
+> 23 |       fetchPayments()
+     |       ^^^^^^^^^^^^^ `fetchPayments` accessed before it is declared
+  24 |     }
+  25 |   }, [user])
+  26 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\payments\page.tsx:27:3
+  25 |   }, [user])
+  26 |
+> 27 |   const fetchPayments = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 29 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 70 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 71 |   }
+     | ^^^^ `fetchPayments` is declared here
+  72 |
+  73 |   if (isLoading) {
+  74 |     return (  react-hooks/immutability
+  25:6   warning  React Hook useEffect has a missing dependency: 'fetchPayments'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  44:48  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\profile\page.tsx
+  28:7  error    Error: Cannot access variable before it is declared
+
+`fetchProfile` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\profile\page.tsx:28:7
+  26 |   useEffect(() => {
+  27 |     if (user) {
+> 28 |       fetchProfile()
+     |       ^^^^^^^^^^^^ `fetchProfile` accessed before it is declared
+  29 |     }
+  30 |   }, [user])
+  31 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\client\profile\page.tsx:32:3
+  30 |   }, [user])
+  31 |
+> 32 |   const fetchProfile = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 34 |     const { data, error } = await supabase
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 48 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 49 |   }
+     | ^^^^ `fetchProfile` is declared here
+  50 |
+  51 |   const handleSave = async () => {
+  52 |     setIsSaving(true)  react-hooks/immutability
+  30:6  warning  React Hook useEffect has a missing dependency: 'fetchProfile'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\appointments\page.tsx
+  19:7   error    Error: Cannot access variable before it is declared
+
+`fetchAppointments` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\appointments\page.tsx:19:7
+  17 |   useEffect(() => {
+  18 |     if (user) {
+> 19 |       fetchAppointments()
+     |       ^^^^^^^^^^^^^^^^^ `fetchAppointments` accessed before it is declared
+  20 |     }
+  21 |   }, [user])
+  22 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\appointments\page.tsx:23:3
+  21 |   }, [user])
+  22 |
+> 23 |   const fetchAppointments = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 25 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 62 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |   }
+     | ^^^^ `fetchAppointments` is declared here
+  64 |
+  65 |   const handleStatusChange = async (appointmentId: string, newStatus: string) => {
+  66 |     const supabase = createClient()  react-hooks/immutability
+  21:6   warning  React Hook useEffect has a missing dependency: 'fetchAppointments'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+  47:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\clients\page.tsx
+   23:7   error    Error: Cannot access variable before it is declared
+
+`fetchClients` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\clients\page.tsx:23:7
+  21 |   useEffect(() => {
+  22 |     if (user) {
+> 23 |       fetchClients()
+     |       ^^^^^^^^^^^^ `fetchClients` accessed before it is declared
+  24 |     }
+  25 |   }, [user])
+  26 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\clients\page.tsx:27:3
+  25 |   }, [user])
+  26 |
+> 27 |   const fetchClients = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 29 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 69 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 70 |   }
+     | ^^^^ `fetchClients` is declared here
+  71 |
+  72 |   const filteredClients = clients.filter((client: any) =>
+  73 |     client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||  react-hooks/immutability
+   25:6   warning  React Hook useEffect has a missing dependency: 'fetchClients'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+   54:35  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+   72:51  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  123:47  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\earnings\page.tsx
+   26:7   error    Error: Cannot access variable before it is declared
+
+`fetchEarnings` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\earnings\page.tsx:26:7
+  24 |   useEffect(() => {
+  25 |     if (user) {
+> 26 |       fetchEarnings()
+     |       ^^^^^^^^^^^^^ `fetchEarnings` accessed before it is declared
+  27 |     }
+  28 |   }, [user])
+  29 |
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\earnings\page.tsx:30:3
+  28 |   }, [user])
+  29 |
+> 30 |   const fetchEarnings = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |     const supabase = createClient()
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 32 |     
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |     setIsLoading(false)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |   }
+     | ^^^^ `fetchEarnings` is declared here
+  65 |
+  66 |   const exportEarnings = () => {
+  67 |     const csv = [  react-hooks/immutability
+   28:6   warning  React Hook useEffect has a missing dependency: 'fetchEarnings'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react-hooks/exhaustive-deps
+   69:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  160:48  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\dashboard\lawyer\page.tsx
+  114:57  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  114:64  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\app\not-found.tsx
+  13:27  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  13:47  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\AppointmentCalendar.tsx
+   6:10  warning  'Button' is defined but never used                 @typescript-eslint/no-unused-vars
+  16:39  warning  'lawyerId' is defined but never used               @typescript-eslint/no-unused-vars
+  18:10  warning  'selectedTime' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  19:10  warning  'isLoading' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  39:16  warning  'error' is defined but never used                  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\AppointmentCard.tsx
+   12:3   warning  'MapPin' is defined but never used        @typescript-eslint/no-unused-vars
+   19:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+  110:65  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\AppointmentForm.tsx
+   9:10  warning  'Input' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  43:20  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  59:24  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\AppointmentForm.tsx:59:24
+  57 |   })
+  58 |
+> 59 |   const selectedDate = watch('date')
+     |                        ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  60 |   const selectedDuration = watch('duration')
+  61 |
+  62 |   const calculateTotal = () => {  react-hooks/incompatible-library
+  92:14  warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\AppointmentTable.tsx
+   20:3   warning  'Filter' is defined but never used        @typescript-eslint/no-unused-vars
+   25:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  151:67  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\appointments\TimeSlotPicker.tsx
+  1:34  warning  'date' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\auth\ForgotPasswordForm.tsx
+  40:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  53:15  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  70:42  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\auth\LoginForm.tsx
+   42:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   53:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  163:14  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\auth\RegisterForm.tsx
+   47:21  error  Unexpected any. Specify a different type                                                                                                           @typescript-eslint/no-explicit-any
+  153:26  error  React Hook "useAuth" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function  react-hooks/rules-of-hooks
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\chatbot\ChatWindow.tsx
+   21:45  warning  'clearChat' is assigned a value but never used                   @typescript-eslint/no-unused-vars
+   91:64  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  113:41  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\dashboard\RevenueChart.tsx
+  25:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\dashboard\UserTable.tsx
+  3:10  warning  'Badge' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerCard.tsx
+  2:8   warning  'Image' is defined but never used  @typescript-eslint/no-unused-vars
+  7:10  warning  'cn' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerFilter.tsx
+  6:10  warning  'Input' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerList.tsx
+  12:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerProfile.tsx
+    4:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+    5:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   15:3   warning  'CheckCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   22:3   warning  'Flag' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  325:48  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerProfile.tsx:325:48
+  323 |                           <div 
+  324 |                             className="h-full bg-primary rounded-full"
+> 325 |                             style={{ width: `${Math.random() * 100}%` }}
+      |                                                ^^^^^^^^^^^^^ Cannot call impure function
+  326 |                           />
+  327 |                         </div>
+  328 |                         <span className="text-sm text-muted-foreground">  react-hooks/purity
+  329:39  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\lawyers\LawyerProfile.tsx:329:39
+  327 |                         </div>
+  328 |                         <span className="text-sm text-muted-foreground">
+> 329 |                           {Math.floor(Math.random() * 100)}%
+      |                                       ^^^^^^^^^^^^^ Cannot call impure function
+  330 |                         </span>
+  331 |                       </div>
+  332 |                     ))}                                                                      react-hooks/purity
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\reviews\ReviewCard.tsx
+  43:61  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\components\ui\input.tsx
+  4:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\constants\plans.ts
+  19:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\hooks\useChat.ts
+  29:17  warning  'messages' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\hooks\useNotifications.ts
+  116:6  warning  React Hook useEffect has a missing dependency: 'state'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\lib\auth\permissions.ts
+  52:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\lib\supabase\admin.ts
+  37:51  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  65:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  65:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\lib\supabase\server.ts
+  59:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\lib\utils\formatDate.ts
+  1:34  warning  'formatRelative' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\lib\utils\helpers.ts
+   10:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   10:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   23:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   23:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   44:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\scripts\seed-users.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\services\appointment.service.ts
+  161:39  warning  'reason' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\services\lawyer.service.ts
+   91:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  171:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  182:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\services\notification.service.ts
+  11:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\services\payment.service.ts
+  104:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  136:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\store\authStore.ts
+   18:12  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   24:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  268:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\store\chatStore.ts
+  49:11  warning  'get' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\store\notificationStore.ts
+  10:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\types\chat.ts
+  36:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  52:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\AI-powered Lawyer Appointment SaaS platform\lexiai\types\payment.ts
+  16:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  92:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 163 problems (110 errors, 53 warnings)
+

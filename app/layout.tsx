@@ -33,29 +33,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning className={cn("h-full", inter.variable, "font-sans", geist.variable)}>
-      <body className="min-h-full flex flex-col antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: "hsl(var(--background))",
-                color: "hsl(var(--foreground))",
-                border: "1px solid hsl(var(--border))",
-              },
-            }}
-          />
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+   return (
+     <html lang="en" suppressHydrationWarning className={cn("h-full", inter.variable, "font-sans", geist.variable)}>
+       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+         <ThemeProvider
+           attribute="class"
+           defaultTheme="system"
+           enableSystem
+           disableTransitionOnChange
+         >
+           {children}
+           <Toaster
+             position="top-right"
+             toastOptions={{
+               duration: 4000,
+               style: {
+                 background: "hsl(var(--background))",
+                 color: "hsl(var(--foreground))",
+                 border: "1px solid hsl(var(--border))",
+               },
+             }}
+           />
+         </ThemeProvider>
+       </body>
+     </html>
+   );
 }

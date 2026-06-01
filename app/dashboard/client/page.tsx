@@ -25,57 +25,57 @@ export default function ClientDashboard() {
 
   useEffect(() => {
     if (user) {
+      const fetchDashboardData = async () => {
+        const supabase = createClient()
+        
+        // Get appointments
+        const { data: appointments } = await supabase
+          .from('appointments')
+          .select(`
+            *,
+            lawyer:lawyer_id (
+              id,
+              users:user_id (
+                name,
+                avatar_url
+              )
+            )
+          `)
+          .eq('client_id', user?.id)
+          .order('appointment_date', { ascending: true })
+
+        // Get documents
+        const { data: documents } = await supabase
+          .from('documents')
+          .select('*')
+          .eq('user_id', user?.id)
+          .order('created_at', { ascending: false })
+          .limit(5)
+
+        // Calculate stats
+        const totalSpent = appointments
+          ?.filter(apt => apt.payment_status === 'paid')
+          .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
+
+        const upcoming = appointments?.filter(
+          apt => apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()
+        ) || []
+
+        setStats({
+          totalAppointments: appointments?.length || 0,
+          totalDocuments: documents?.length || 0,
+          totalSpent,
+          upcomingAppointments: upcoming.length,
+        })
+
+        setUpcomingAppointments(upcoming.slice(0, 5))
+        setRecentDocuments(documents || [])
+        setIsLoading(false)
+      }
+
       fetchDashboardData()
     }
   }, [user])
-
-  const fetchDashboardData = async () => {
-    const supabase = createClient()
-    
-    // Get appointments
-    const { data: appointments } = await supabase
-      .from('appointments')
-      .select(`
-        *,
-        lawyer:lawyer_id (
-          id,
-          users:user_id (
-            name,
-            avatar_url
-          )
-        )
-      `)
-      .eq('client_id', user?.id)
-      .order('appointment_date', { ascending: true })
-
-    // Get documents
-    const { data: documents } = await supabase
-      .from('documents')
-      .select('*')
-      .eq('user_id', user?.id)
-      .order('created_at', { ascending: false })
-      .limit(5)
-
-    // Calculate stats
-    const totalSpent = appointments
-      ?.filter(apt => apt.payment_status === 'paid')
-      .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
-
-    const upcoming = appointments?.filter(
-      apt => apt.status === 'confirmed' && new Date(apt.appointment_date) > new Date()
-    ) || []
-
-    setStats({
-      totalAppointments: appointments?.length || 0,
-      totalDocuments: documents?.length || 0,
-      totalSpent,
-      upcomingAppointments: upcoming.length,
-    })
-
-    setUpcomingAppointments(upcoming.slice(0, 5))
-    setRecentDocuments(documents || [])
-    setIsLoading(false)
-  }
 
   const statItems = [
     {
@@ -133,39 +133,39 @@ export default function ClientDashboard() {
               </Link>
             </CardHeader>
             <CardContent>
-              {upcomingAppointments.length === 0 ? (
-                <div className="text-center py-8">
-                  <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground">No upcoming appointments</p>
-                  <Link href="/lawyers">
-                    <Button className="mt-4">Book an Appointment</Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {upcomingAppointments.map((apt: any) => (
-                    <div key={apt.id} className="flex items-center justify-between p-3 rounded-lg border">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <span className="text-primary font-semibold">
-                            {apt.lawyer?.users?.name?.charAt(0)}
-                          </span>
-                        </div>
-                        <div>
-                          <p className="font-medium">{apt.lawyer?.users?.name}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {formatDate(apt.appointment_date)} at {formatTime(apt.appointment_date)}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold">PKR {apt.fee?.toLocaleString()}</p>
-                        <p className="text-xs capitalize text-muted-foreground">{apt.status}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+{upcomingAppointments.length === 0 ? (
+                 <div className="text-center py-8">
+                   <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                   <p className="text-muted-foreground">No upcoming appointments</p>
+                   <Link href="/lawyers">
+                     <Button className="mt-4">Book an Appointment</Button>
+                   </Link>
+                 </div>
+               ) : (
+                 <div className="space-y-4">
+                   {upcomingAppointments.map((apt: any) => (
+                     <div key={apt.id} className="flex items-center justify-between p-3 rounded-lg border">
+                       <div className="flex items-center gap-3">
+                         <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                           <span className="text-primary font-semibold">
+                             {apt.lawyer?.users?.name?.charAt(0) ?? ''}
+                           </span>
+                         </div>
+                         <div>
+                           <p className="font-medium">{apt.lawyer?.users?.name ?? 'Unknown Lawyer'}</p>
+                           <p className="text-sm text-muted-foreground">
+                             {formatDate(apt.appointment_date)} at {formatTime(apt.appointment_date)}
+                           </p>
+                         </div>
+                       </div>
+                       <div className="text-right">
+                         <p className="font-semibold">PKR {apt.fee?.toLocaleString() ?? '0'}</p>
+                         <p className="text-xs capitalize text-muted-foreground">{apt.status ?? 'unknown'}</p>
+                       </div>
+                     </div>
+                   ))}
+                 </div>
+               )}
             </CardContent>
           </Card>
 

@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { ReviewCard } from '@/components/reviews/ReviewCard'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { RatingStars } from '@/components/reviews/RatingStars'
+import { Review } from '@/types/review'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -14,48 +15,48 @@ import { toast } from 'react-hot-toast'
 
 export default function LawyerReviewsPage() {
   const { user } = useAuth()
-  const [reviews, setReviews] = useState<any[]>([])
+  const [reviews, setReviews] = useState<Review[]>([])
   const [averageRating, setAverageRating] = useState(0)
   const [responseText, setResponseText] = useState('')
-  const [selectedReview, setSelectedReview] = useState(null)
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (user) {
+      const fetchReviews = async () => {
+        const supabase = createClient()
+        
+        const { data: lawyer } = await supabase
+          .from('lawyers')
+          .select('id')
+          .eq('user_id', user?.id)
+          .single()
+
+        if (lawyer) {
+          const { data, error } = await supabase
+            .from('reviews')
+            .select(`
+              *,
+              client:client_id (
+                name,
+                avatar_url
+              )
+            `)
+            .eq('lawyer_id', lawyer.id)
+            .order('created_at', { ascending: false })
+
+          if (!error && data) {
+            setReviews(data)
+            const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length || 0
+            setAverageRating(avg)
+          }
+        }
+        setIsLoading(false)
+      }
+
       fetchReviews()
     }
   }, [user])
-
-  const fetchReviews = async () => {
-    const supabase = createClient()
-    
-    const { data: lawyer } = await supabase
-      .from('lawyers')
-      .select('id')
-      .eq('user_id', user?.id)
-      .single()
-
-    if (lawyer) {
-      const { data, error } = await supabase
-        .from('reviews')
-        .select(`
-          *,
-          client:client_id (
-            name,
-            avatar_url
-          )
-        `)
-        .eq('lawyer_id', lawyer.id)
-        .order('created_at', { ascending: false })
-
-      if (!error && data) {
-        setReviews(data)
-        const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length || 0
-        setAverageRating(avg)
-      }
-    }
-    setIsLoading(false)
-  }
 
   const submitResponse = async () => {
     if (!responseText.trim()) return
@@ -102,7 +103,7 @@ export default function LawyerReviewsPage() {
         </div>
 
         <div className="space-y-4">
-          {reviews.map((review: any) => (
+           {reviews.map((review) => (
             <div key={review.id} className="relative">
               <ReviewCard review={review} />
               {!review.lawyer_response && (

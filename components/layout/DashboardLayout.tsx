@@ -33,7 +33,12 @@ export function DashboardLayout({ children, role }: DashboardLayoutProps) {
     )
   }
 
-  if (!user || user.role !== role) {
+  // Only check role if we have user data (not loading)
+  if (!user) {
+    return null
+  }
+
+  if (user.role !== role) {
     return null
   }
 

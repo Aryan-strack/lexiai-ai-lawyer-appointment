@@ -13,7 +13,12 @@ export function createClient() {
   const validUrl = url.startsWith('http') ? url : 'https://dummy.supabase.co'
   const validKey = key || 'dummy_key'
 
-  supabaseClient = createBrowserClient<Database>(validUrl, validKey)
+  supabaseClient = createBrowserClient<Database>(validUrl, validKey, {
+    auth: {
+      persistSession: true,
+      detectSessionInUrl: true,
+    },
+  })
 
   return supabaseClient
 }

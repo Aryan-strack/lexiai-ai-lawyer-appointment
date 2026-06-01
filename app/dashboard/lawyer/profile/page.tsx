@@ -39,32 +39,32 @@ export default function LawyerProfilePage() {
 
   useEffect(() => {
     if (user) {
+      const fetchProfile = async () => {
+        const supabase = createClient()
+        const { data, error } = await supabase
+          .from('lawyers')
+          .select('*')
+          .eq('user_id', user?.id)
+          .single()
+
+        if (!error && data) {
+          setProfile({
+            specialization: data.specialization || [],
+            experience_years: data.experience_years || 0,
+            bar_council_number: data.bar_council_number || '',
+            city: data.city || '',
+            fee_per_hour: data.fee_per_hour || 0,
+            bio: data.bio || '',
+            languages: data.languages || ['English'],
+            education: data.education || [],
+          })
+        }
+        setIsLoading(false)
+      }
+
       fetchProfile()
     }
   }, [user])
-
-  const fetchProfile = async () => {
-    const supabase = createClient()
-    const { data, error } = await supabase
-      .from('lawyers')
-      .select('*')
-      .eq('user_id', user?.id)
-      .single()
-
-    if (!error && data) {
-      setProfile({
-        specialization: data.specialization || [],
-        experience_years: data.experience_years || 0,
-        bar_council_number: data.bar_council_number || '',
-        city: data.city || '',
-        fee_per_hour: data.fee_per_hour || 0,
-        bio: data.bio || '',
-        languages: data.languages || ['English'],
-        education: data.education || [],
-      })
-    }
-    setIsLoading(false)
-  }
 
   const addSpecialization = (spec: string) => {
     if (!profile.specialization.includes(spec)) {

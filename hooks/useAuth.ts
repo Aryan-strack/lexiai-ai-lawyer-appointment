@@ -9,9 +9,9 @@ interface AuthState {
   isLoading: boolean
   isAuthenticated: boolean
   // Actions
-  signIn: (email: string, password: string) => Promise<void>
-  signInWithEmail: (email: string, password: string) => Promise<void> // alias for compatibility
-  signUp: (email: string, password: string, name: string, role?: 'client' | 'lawyer') => Promise<void>
+  signIn: (email: string, password: string) => Promise<AuthUser>
+  signInWithEmail: (email: string, password: string) => Promise<AuthUser> // alias for compatibility
+  signUp: (email: string, password: string, name: string, role?: 'client' | 'lawyer') => Promise<AuthUser>
   signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
   updateProfile: (data: Partial<AuthUser>) => Promise<void>
@@ -32,6 +32,7 @@ const useAuthStore = create<AuthState>()(
         try {
           const user = await authService.signIn(email, password)
           set({ user, isAuthenticated: true, isLoading: false })
+          return user
         } catch (error) {
           set({ isLoading: false })
           throw error
@@ -44,6 +45,7 @@ const useAuthStore = create<AuthState>()(
         try {
           const user = await authService.signIn(email, password)
           set({ user, isAuthenticated: true, isLoading: false })
+          return user
         } catch (error) {
           set({ isLoading: false })
           throw error
@@ -55,6 +57,7 @@ const useAuthStore = create<AuthState>()(
         try {
           const user = await authService.signUp(email, password, name, role)
           set({ user, isAuthenticated: true, isLoading: false })
+          return user
         } catch (error) {
           set({ isLoading: false })
           throw error
@@ -119,6 +122,12 @@ const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         set({ isLoading: true })
         try {
+          const session = await authService.getSession()
+          if (!session) {
+            set({ user: null, isAuthenticated: false, isLoading: false })
+            return
+          }
+
           const user = await authService.getCurrentUser()
           set({
             user,

@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { DashboardStats } from '@/components/dashboard/DashboardStats'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calendar, Users, DollarSign, Star, Clock, TrendingUp } from 'lucide-react'
+import { Calendar, Users, DollarSign, Star } from 'lucide-react'
 import { AppointmentCalendar } from '@/components/appointments/AppointmentCalendar'
+import { Appointment } from '@/types/appointment'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -22,47 +23,47 @@ export default function LawyerDashboard() {
 
   useEffect(() => {
     if (user) {
+      const fetchDashboardData = async () => {
+        const supabase = createClient()
+        
+        // Get lawyer profile
+        const { data: lawyer } = await supabase
+          .from('lawyers')
+          .select('id')
+          .eq('user_id', user?.id)
+          .single()
+
+        if (lawyer) {
+          // Get appointments
+          const { data: appointments } = await supabase
+            .from('appointments')
+            .select('*, client:client_id(name)')
+            .eq('lawyer_id', lawyer.id)
+            .order('created_at', { ascending: false })
+
+          // Get unique clients
+          const uniqueClients = new Set(appointments?.map(apt => apt.client_id))
+          
+          // Calculate total earnings
+          const totalEarnings = appointments
+            ?.filter(apt => apt.payment_status === 'paid')
+            .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
+
+          setStats({
+            totalAppointments: appointments?.length || 0,
+            totalClients: uniqueClients.size,
+            totalEarnings,
+            averageRating: 4.8,
+          })
+
+          setRecentAppointments(appointments?.slice(0, 5) || [])
+        }
+        setIsLoading(false)
+      }
+
       fetchDashboardData()
     }
   }, [user])
-
-  const fetchDashboardData = async () => {
-    const supabase = createClient()
-    
-    // Get lawyer profile
-    const { data: lawyer } = await supabase
-      .from('lawyers')
-      .select('id')
-      .eq('user_id', user?.id)
-      .single()
-
-    if (lawyer) {
-      // Get appointments
-      const { data: appointments } = await supabase
-        .from('appointments')
-        .select('*, client:client_id(name)')
-        .eq('lawyer_id', lawyer.id)
-        .order('created_at', { ascending: false })
-
-      // Get unique clients
-      const uniqueClients = new Set(appointments?.map(apt => apt.client_id))
-      
-      // Calculate total earnings
-      const totalEarnings = appointments
-        ?.filter(apt => apt.payment_status === 'paid')
-        .reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
-
-      setStats({
-        totalAppointments: appointments?.length || 0,
-        totalClients: uniqueClients.size,
-        totalEarnings,
-        averageRating: 4.8,
-      })
-
-      setRecentAppointments(appointments?.slice(0, 5) || [])
-    }
-    setIsLoading(false)
-  }
 
   const statItems = [
     {
@@ -132,22 +133,22 @@ export default function LawyerDashboard() {
                 <CardTitle>Recent Appointments</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {recentAppointments.map((apt: any) => (
-                    <div key={apt.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted">
-                      <div>
-                        <p className="font-medium">{apt.client?.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(apt.appointment_date).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold">PKR {apt.fee?.toLocaleString()}</p>
-                        <p className="text-xs capitalize text-muted-foreground">{apt.status}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                 <div className="space-y-3">
+                   {recentAppointments.map((apt: Appointment) => (
+                     <div key={apt.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted">
+                       <div>
+                         <p className="font-medium">{apt.client?.name}</p>
+                         <p className="text-sm text-muted-foreground">
+                           {new Date(apt.appointment_date).toLocaleDateString()}
+                         </p>
+                       </div>
+                       <div className="text-right">
+                         <p className="font-semibold">PKR {apt.fee?.toLocaleString()}</p>
+                         <p className="text-xs capitalize text-muted-foreground">{apt.status}</p>
+                       </div>
+                     </div>
+                   ))}
+                 </div>
               </CardContent>
             </Card>
             <Card>

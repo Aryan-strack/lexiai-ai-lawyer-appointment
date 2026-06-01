@@ -33,11 +33,12 @@ export async function getAllUsers() {
 }
 
 export async function updateUserRole(userId: string, role: 'admin' | 'lawyer' | 'client') {
-  const { data, error } = await supabaseAdmin
+  const updateData = { role, updated_at: new Date().toISOString() }
+  const { data, error } = await (supabaseAdmin as any)
     .from('users')
-    .update({ role })
+    .update(updateData)
     .eq('id', userId)
-    .select()
+    .select('*')
     .single()
 
   if (error) throw error
@@ -58,10 +59,10 @@ export async function getSystemStats() {
     supabaseAdmin.from('users').select('*', { count: 'exact', head: true }),
     supabaseAdmin.from('lawyers').select('*', { count: 'exact', head: true }),
     supabaseAdmin.from('appointments').select('*', { count: 'exact', head: true }),
-    supabaseAdmin.from('appointments').select('fee').eq('payment_status', 'paid'),
+    supabaseAdmin.from('appointments').select('fee, *' as any).eq('payment_status', 'paid'),
   ])
 
-  const totalRevenue = revenue.data?.reduce((sum, apt) => sum + (apt.fee || 0), 0) || 0
+  const totalRevenue = (revenue.data as any)?.reduce((sum: number, apt: any) => sum + (apt?.fee || 0), 0) || 0
 
   return {
     totalUsers: users.count || 0,

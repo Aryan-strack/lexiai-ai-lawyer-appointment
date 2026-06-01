@@ -56,10 +56,10 @@ export async function getUserRole() {
   const supabase = await createClient()
   const { data: profile, error } = await supabase
     .from('users')
-    .select('role')
+    .select('role' as any)
     .eq('id', user.id)
     .single()
 
   if (error) return null
-  return profile?.role ?? null
+  return (profile as any)?.role ?? null
 }

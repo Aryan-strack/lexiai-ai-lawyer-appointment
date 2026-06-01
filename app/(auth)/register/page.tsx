@@ -73,9 +73,9 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      await signUp(data.email, data.password, data.name, data.role)
+      const user = await signUp(data.email, data.password, data.name, data.role)
       toast.success('Account ban gaya! Email verify karein.')
-      router.push('/dashboard/client')
+      router.push(`/dashboard/${user.role}`)
     } catch (error: any) {
       const msg = error?.message || 'Registration failed. Please try again.'
       if (msg.includes('already registered')) {
